@@ -1,4 +1,4 @@
-org 0x7C00
+org 0x0
 bits 16
 
 %define ENDL 0x00, 0x0A
@@ -30,25 +30,13 @@ puts:
     ret
 
 main:
-    ; set up segment registers
-    mov ax, 0x0000
-    mov ds, ax
-    mov es, ax
-
-    ;setup stack
-    mov ss, ax
-    mov sp, 0x7C00
-
     ; print hello message
     mov si, msg_hello
     call puts
 
-    hlt
-
 .halt:
+    cli
+    hlt
     jmp .halt
 
-msg_hello: db 'Hello, World!', ENDL, 0
-
-times 510-($-$$) db 0
-dw 0AA55h
+msg_hello: db 'Hello, World! from kernel!!', ENDL, 0
